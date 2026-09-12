@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#730d2a">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NeuroWines">
+<meta name="description" content="Wine export pricing calculator: EXW to consumer PVP, reverse pricing and editable assumptions.">
+
+<title>Wine Export Calculator | NeuroWines</title>
+<style>
+:root{--bg:#f6f0e8;--paper:#fffdfa;--paper2:#fbf6f0;--line:#e2d8cf;--ink:#171a22;--muted:#666b75;--bordeaux:#730d2a;--bordeaux2:#94193b;--gold:#b58a16;--gold2:#d6ad66;--blue:#0e5d9d;--blueBg:#eef7ff;--good:#487a5b}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}main{max-width:760px;margin:auto;padding:18px 14px 70px}.brand{display:flex;align-items:center;gap:13px;margin:2px 0 12px}.logo{width:54px;height:54px;border-radius:15px;background:var(--bordeaux);box-shadow:0 5px 16px rgba(115,13,42,.18)}.brand h1{margin:0;color:var(--bordeaux);font-family:Georgia,'Times New Roman',serif;font-size:27px;line-height:1;letter-spacing:-.4px}.brand small{display:block;margin-top:5px;color:var(--gold);font-weight:800;letter-spacing:.15px}.hero h2{font-family:Georgia,'Times New Roman',serif;font-size:21px;line-height:1.18;margin:0 0 12px;color:#2a2023}.hero p{margin:0 0 14px;color:#31343b;line-height:1.5;background:rgba(255,255,255,.55);border:1px solid #eee4dc;border-radius:16px;padding:14px}.box{border:1px solid var(--line);border-radius:18px;padding:17px;margin:14px 0;background:var(--paper);box-shadow:0 8px 24px rgba(70,45,35,.06)}.step1{background:var(--paper)}.step2{background:#fff9f8;border-color:#ead1d7}.step3{background:#fbfaf8}.reverse{background:linear-gradient(180deg,#fff9df,#fffdf4);border-color:#ead48a;box-shadow:0 8px 24px rgba(181,138,22,.09)}.reverse .kicker{color:#82640a}.reverse button{background:linear-gradient(90deg,#8b6a0c,#b58a16)}.reverse label{color:#3f351c}.reverse-grid{align-items:stretch}.reverse-field{background:#fffdf7;border:1px solid #e4d39c;border-radius:12px;padding:12px;min-height:116px}.reverse-output{display:flex;flex-direction:column;justify-content:flex-start}.money-input{display:flex;align-items:center;border:1px solid #cbb66e;border-radius:9px;background:#fff;overflow:hidden}.money-input span{padding:0 10px;font-weight:900;color:#80620b;font-size:13px}.money-input input{border:0!important;box-shadow:none!important;margin:0;padding-left:2px;background:#fff}.reverse-value{font-family:Georgia,'Times New Roman',serif;font-size:29px;font-weight:800;color:var(--gold);background:#fff;border:1px solid #cbb66e;border-radius:9px;padding:10px 12px;min-height:48px;display:flex;align-items:center}.field-unit{font-size:10px;color:#756a4d;margin-top:6px}.kicker{font-family:Georgia,'Times New Roman',serif;font-size:16px;color:var(--bordeaux);font-weight:800;letter-spacing:.1px;margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{font-size:12px;font-weight:750;color:#2d3037;display:block;margin-bottom:5px}input,select{width:100%;background:#fff;color:#171a22;border:1px solid #cfd2d8;border-radius:9px;padding:12px;font-size:15px;margin-bottom:9px;outline:none}input:focus,select:focus{border-color:var(--bordeaux);box-shadow:0 0 0 3px rgba(115,13,42,.08)}.invalid{border:2px solid #c73e4b!important;background:#fff7f7!important}.field-error{color:#b62d3c;font-size:10px;font-weight:800;margin-top:-5px;margin-bottom:8px;display:none}.form-error{display:none;margin:10px 0 0;padding:11px 12px;border-radius:9px;background:#fff0f1;border:1px solid #d79ca4;color:#9b2332;font-size:12px;font-weight:800}button{width:100%;background:linear-gradient(90deg,var(--bordeaux),var(--bordeaux2));color:#fff;border:0;border-radius:10px;padding:14px;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 5px 12px rgba(115,13,42,.14)}.notice{margin-top:10px;padding:10px 12px;border-left:3px solid var(--gold);background:#f6f1ea;border-radius:8px;color:#5b554e;font-size:11px;line-height:1.4}.hidden{display:none}.route{text-align:center;color:var(--muted);font-size:11px;margin-bottom:7px}.big{text-align:center;color:var(--bordeaux);font-family:Georgia,'Times New Roman',serif;font-size:48px;font-weight:800;line-height:1;margin:8px 0}.center{text-align:center}.muted{color:var(--muted)}.currency-sub{font-size:12px;color:var(--muted);text-align:center;margin-top:5px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.card{background:#fff;border:1px solid #e7ddd7;border-radius:12px;padding:11px;text-align:center}.card b{display:block;color:var(--bordeaux);font-size:20px}.card span{font-size:10px;color:var(--muted)}.row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #e4ddd7}.row:last-child{border-bottom:0}.row b{text-align:right;color:#272a30}.edit{display:grid;grid-template-columns:1.45fr .8fr .65fr;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #e6dfda}.edit input{margin:0;background:#fff}.status{font-size:9px;font-weight:900;color:var(--gold)}.barrow{display:grid;grid-template-columns:110px 1fr 72px;gap:8px;align-items:center;margin:8px 0;font-size:11px}.bar{height:10px;background:#ebe7e3;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--bordeaux),var(--gold2))}footer{text-align:center;color:#8d837b;font-size:10px;margin-top:24px}.installbar{display:flex;gap:8px;align-items:center;margin:0 0 14px}.installbar button{width:auto;padding:10px 14px;background:#fff;border:1px solid var(--bordeaux);color:var(--bordeaux);box-shadow:none}.installbar .status{font-size:10px;color:var(--muted)}@media(display-mode:standalone){.installbar{display:none!important}}@media(max-width:520px){main{padding:15px 12px 56px}.brand h1{font-size:24px}.hero h2{font-size:19px}.grid{grid-template-columns:1fr 1fr}.edit{grid-template-columns:1.25fr .8fr .55fr}.big{font-size:44px}}
+</style>
+</head>
+<body>
+<main>
+<div class="brand"><div class="logo" style="background:url('./icons/icon-192.png') center/cover no-repeat"></div><div><h1>Wine Export Calculator</h1><small>Powered by Neurowines.com</small></div></div>
+<div class="hero">
+  <h2>See the real route<br>from winery to Shelf Price.</h2>
+  <p>Get an estimated retail price of any given wine based on its Ex Works price, Route to Market and Destination. Make sure to fill in the data below and hit calculate route to market button. You can also do reverse pricing further below.</p>
+</div>
+
+
+<div class="installbar" id="installBar">
+  <button id="installApp" type="button">INSTALL APP</button>
+  <span class="status" id="installStatus">Available as an installable browser app.</span>
+</div>
+<section class="box step1">
+<div class="kicker">STEP 1 · PRODUCT & ROUTE</div>
+<div class="grid">
+  <div><label>Origin country</label><select id="oc" required><option value="">Select country</option></select></div>
+  <div><label>Origin city</label><select id="ocity" required><option value="">Select city</option></select></div>
+  <div><label>Destination country</label><select id="dc" required><option value="">Select country</option></select></div>
+  <div><label>Destination city / state</label><select id="dcity" required><option value="">Select city</option></select></div>
+  <div><label>Route to Market</label><select id="cust" required>
+    <option value="importer" selected>Importer</option><option value="distributor">Distributor</option>
+    <option value="physical">Physical retail</option><option value="online">Online retail</option>
+  </select><div class="muted" style="font-size:10px;margin-top:5px">The Route to Market changes the estimated retail price. Importer = Importer → Distributor → Retail → Consumer. Direct-to-retail routes remove commercial layers and reduce the estimated retail price.</div></div>
+  <div><label>Bottle format</label><select id="ml" required><option>187</option><option>200</option><option>250</option><option>375</option><option>500</option><option selected>750</option><option>1000</option><option>1500</option></select></div>
+  <div><label>Shipment volume</label><select id="ship" required><option value="pallet">1 pallet</option><option value="20">1 FCL · 20'</option><option value="40">1 FCL · 40'</option></select></div>
+  <div><label>EXW per bottle</label><input id="exw" type="number" step=".01" min="0.01" value="5" required></div>
+  <div><label>EXW currency</label><select id="cur" required>
+    <option>ARS</option><option>AUD</option><option>BRL</option><option>CLP</option><option>CNY</option><option>COP</option><option>DOP</option><option>EUR</option><option>GBP</option><option>GTQ</option><option>JPY</option><option>KRW</option><option>MXN</option><option>NZD</option><option>PEN</option><option>PYG</option><option>ZAR</option><option selected>USD</option><option>UYU</option>
+  </select></div>
+</div>
+<div id="formError" class="form-error">Please review the highlighted fields before calculating.</div><button onclick="calculate()">CALCULATE ROUTE TO MARKET</button>
+<div class="notice">Verified regulatory data is separated from commercial estimates. Freight, handling and margins can be edited in Behind the Scenes.</div>
+</section>
+
+<section id="step2" class="box step2 hidden">
+<div class="kicker">STEP 2 · RESULT</div>
+<div id="route" class="route"></div>
+<div id="pvp" class="big"></div>
+<div id="pvpLabel" class="center">Estimated Retail Price per bottle in local currency</div>
+<div id="origEq" class="currency-sub"></div>
+<div class="cards" style="grid-template-columns:1fr"><div class="card"><b id="mult"></b><span>EXW → RETAIL PRICE MULTIPLIER</span></div></div><span id="landed" class="hidden"></span><span id="units" class="hidden"></span>
+
+</section>
+
+
+
+<section id="step3" class="box step3">
+<div class="kicker">BEHIND THE SCENES · ADJUST ASSUMPTIONS</div>
+<p class="muted" style="font-size:11px"><b>This section is editable.</b> All pricing assumptions are visible: logistics, FX, duties, taxes and margins. FX values are planning references, not live rates. Change any value and press “RECALCULATE WITH MY ASSUMPTIONS”.</p>
+<div class="edit"><b>Assumption</b><b>Value</b><b>Status</b></div>
+<div class="edit"><span>Bottles</span><input id="u" type="number"><span class="status">AUTO</span></div>
+<div class="edit"><span>FX origin → destination</span><input id="fx" type="number" step=".0001"><span class="status">REF.</span></div>
+<div class="edit"><span>International freight · total USD</span><input id="freight" type="number"><span class="status">EST.</span></div>
+<div class="edit"><span>Insurance % of goods</span><input id="insurance" type="number" step=".01"><span class="status">EST.</span></div>
+<div class="edit"><span>Destination handling · USD</span><input id="handling" type="number"><span class="status">EST.</span></div>
+<div class="edit"><span>Import duty %</span><input id="duty" type="number" step=".01"><span id="dutyStatus" class="status">RULE</span></div>
+<div class="edit"><span>IPI / excise %</span><input id="ipi" type="number" step=".01"><span class="status">RULE/EST.</span></div>
+<div class="edit"><span>PIS/COFINS / levy %</span><input id="social" type="number" step=".01"><span class="status">EST.</span></div>
+<div class="edit"><span>VAT / sales tax %</span><input id="vat" type="number" step=".01"><span class="status">RULE/EST.</span></div>
+<div class="edit"><span>Importer margin %</span><input id="im" type="number"><span class="status">EST.</span></div>
+<div class="edit"><span>Distributor margin %</span><input id="dm" type="number"><span class="status">EST.</span></div>
+<div class="edit"><span>Retail margin %</span><input id="rm" type="number"><span class="status">EST.</span></div>
+<button style="margin-top:14px" onclick="recalc(true)">RECALCULATE WITH MY ASSUMPTIONS</button><div id="adjustedResult" class="hidden" style="margin-top:16px;text-align:center"><div class="kicker">UPDATED ESTIMATED RETAIL PRICE</div><div id="adjustedPvp" class="big"></div><div class="center muted">Estimated Retail Price per bottle in local currency</div></div>
+<div id="breakdown" style="margin-top:18px"></div>
+<div id="sourceNote" class="notice"></div>
+</section>
+
+<section id="reverseBox" class="box reverse">
+<div class="kicker">MODE 2 · REVERSE PRICING · TARGET RETAIL PRICE → MAXIMUM EXW</div>
+<p class="muted" style="font-size:11px">Enter your target consumer retail price. The calculator reverses the commercial chain and estimates the maximum EXW compatible with that price using your current assumptions.</p>
+<div class="grid reverse-grid">
+  <div class="reverse-field"><label id="targetPvpLabel">Target Retail Price</label><div class="money-input"><span id="targetCurrency">BRL</span><input id="targetPvp" type="number" step=".01" value="39.90" inputmode="decimal"></div><div class="field-unit">per bottle · destination currency</div></div>
+  <div class="reverse-field reverse-output"><label id="reverseExwLabel">Maximum Ex Works</label><div id="reverseExw" class="reverse-value">—</div><div id="reverseExwUnit" class="field-unit">per bottle · EXW currency</div></div>
+</div>
+<button onclick="reverseCalc()">CALCULATE MAXIMUM EXW</button>
+<div id="reverseNote" class="notice"></div>
+</section>
+
+
+<footer><div>NEUROWINES · WINE EXPORT CALCULATOR · EXPLORE | CONNECT | TRANSCEND</div><div style="margin-top:10px;line-height:1.45">While this app is updated regularly, all prices and calculations shown are estimates and should be used for reference purposes only. Actual costs, taxes, duties, exchange rates and margins may vary by market and transaction.</div></footer>
+</main>
+
+<script>
+const $=x=>document.getElementById(x);
+function N(x){
+  const el=$(x);
+  if(!el) return 0;
+  const raw=String(el.value ?? '').trim().replace(',', '.');
+  const v=Number(raw);
+  return Number.isFinite(v)?v:0;
+}
+let assumptionsInitialized=false;
+const countries=['Chile','Argentina','Uruguay','Brazil','Paraguay','United States','Mexico','Dominican Republic','Panama','Colombia','Peru','Guatemala','El Salvador','United Kingdom','Spain','France','Italy','Germany','Portugal','China','Japan','South Korea','Australia','New Zealand','South Africa'].sort((a,b)=>a.localeCompare(b,'en'));
+
+const cityData={"Chile":["Santiago","Valparaíso","San Antonio","Viña del Mar","Concepción","Puerto Montt"],"Argentina":["Buenos Aires","Mendoza","Córdoba","Rosario","San Juan"],"Uruguay":["Montevideo","Canelones","Punta del Este","Colonia del Sacramento"],"Brazil":["São Paulo","Santos","Rio de Janeiro","Itajaí","Curitiba","Porto Alegre","Belo Horizonte","Brasília","Recife"],"Paraguay":["Asunción","Ciudad del Este","San Lorenzo","Encarnación"],"United States":["Miami, FL","New York, NY","Los Angeles, CA","Houston, TX","San Francisco, CA","Chicago, IL"],"Mexico":["Ciudad de México","Monterrey","Guadalajara","Veracruz","Cancún","Querétaro"],"Dominican Republic":["Santo Domingo","Santiago de los Caballeros","Puerto Plata","Punta Cana"],"Panama":["Panama City","Colón","David"],"Colombia":["Bogotá","Cartagena","Medellín","Barranquilla","Cali","Buenaventura"],"Peru":["Lima","Callao","Arequipa","Trujillo","Cusco"],"Guatemala":["Guatemala City","Puerto Quetzal","Santo Tomás de Castilla","Antigua Guatemala"],"El Salvador":["San Salvador","Acajutla","Santa Ana","La Libertad"],"United Kingdom":["London","Liverpool","Manchester","Southampton","Bristol"],"Spain":["Madrid","Barcelona","Valencia","Bilbao","Seville","Algeciras"],"France":["Paris","Bordeaux","Marseille","Lyon","Le Havre","Nantes"],"Italy":["Milan","Rome","Genoa","Verona","Naples"],"Germany":["Hamburg","Berlin","Frankfurt","Munich","Bremen"],"Portugal":["Lisbon","Porto","Leixões","Setúbal","Faro"],"China":["Shanghai","Shenzhen","Guangzhou","Beijing","Ningbo"],"Japan":["Tokyo","Yokohama","Osaka","Kobe","Nagoya"],"South Korea":["Seoul","Busan","Incheon"],"Australia":["Sydney","Melbourne","Brisbane","Adelaide","Perth"],"New Zealand":["Auckland","Wellington","Christchurch","Tauranga"],"South Africa":["Cape Town","Johannesburg","Durban","Port Elizabeth"]};
+
+function populateCities(countrySelectId, citySelectId){
+ const country=$(countrySelectId).value, city=$(citySelectId);
+ city.innerHTML='<option value="">Select city</option>';
+ [...(cityData[country]||[])].sort((a,b)=>a.localeCompare(b,'en')).forEach(c=>{
+   const o=document.createElement('option'); o.value=c; o.textContent=c; city.appendChild(o);
+ });
+ if((cityData[country]||[]).length) city.value=cityData[country][0];
+}
+function populateCountries(){
+  const origin = $('oc'), destination = $('dc');
+  countries.forEach(c=>{
+    origin.add(new Option(c,c));
+    destination.add(new Option(c,c));
+  });
+  origin.value='Chile';
+  destination.value='Brazil';
+}
+populateCountries();
+function clearReverseResult(clearTarget=false){
+  if(clearTarget && $('targetPvp')) $('targetPvp').value='';
+  if($('reverseExw')) $('reverseExw').textContent='—';
+  if($('reverseNote')) $('reverseNote').textContent='';
+}
+function scenarioChanged(clearTarget=false){
+  defaults();
+  clearReverseResult(clearTarget);
+}
+function resetScenarioAssumptions(){
+  populateCities('oc','ocity');
+  populateCities('dc','dcity');
+  scenarioChanged(true);
+}
+$('oc').addEventListener('change',()=>{populateCities('oc','ocity'); scenarioChanged(false);});
+$('dc').addEventListener('change',()=>{populateCities('dc','dcity'); scenarioChanged(true);});
+$('cust').addEventListener('change',()=>scenarioChanged(false));
+$('ml').addEventListener('change',()=>scenarioChanged(false));
+$('ship').addEventListener('change',()=>scenarioChanged(false));
+$('cur').addEventListener('change',()=>scenarioChanged(false));
+populateCities('oc','ocity');
+populateCities('dc','dcity');
+
+const requiredFields=['oc','ocity','dc','dcity','cust','ml','ship','exw','cur'];
+
+function clearFieldError(el){
+  el.classList.remove('invalid');
+  el.removeAttribute('aria-invalid');
+}
+function validateForm(){
+  let firstBad=null;
+  requiredFields.forEach(id=>{
+    const el=$(id);
+    let bad = !el.value || (id==='exw' && Number(el.value)<=0);
+    if(bad){
+      el.classList.add('invalid');
+      el.setAttribute('aria-invalid','true');
+      if(!firstBad) firstBad=el;
+    } else clearFieldError(el);
+  });
+  $('formError').style.display = firstBad ? 'block' : 'none';
+  if(firstBad){
+    firstBad.scrollIntoView({behavior:'smooth',block:'center'});
+    firstBad.focus();
+    return false;
+  }
+  return true;
+}
+requiredFields.forEach(id=>{
+  const el=$(id);
+  el.addEventListener('input',()=>clearFieldError(el));
+  el.addEventListener('change',()=>clearFieldError(el));
+});
+
+const destCurrency={Brazil:'BRL',Chile:'CLP',Argentina:'ARS',Uruguay:'UYU',Paraguay:'PYG','United States':'USD',Mexico:'MXN','Dominican Republic':'DOP',Panama:'USD',Colombia:'COP',Peru:'PEN',Guatemala:'GTQ','El Salvador':'USD','United Kingdom':'GBP',Spain:'EUR',France:'EUR',Italy:'EUR',Germany:'EUR',Portugal:'EUR',China:'CNY',Japan:'JPY','South Korea':'KRW',Australia:'AUD','New Zealand':'NZD','South Africa':'ZAR'};
+const region={Chile:'SA',Argentina:'SA',Uruguay:'SA',Brazil:'SA',Paraguay:'SA',Colombia:'SA',Peru:'SA','United States':'NA',Mexico:'NA','Dominican Republic':'CA',Panama:'CA',Guatemala:'CA','El Salvador':'CA','United Kingdom':'EU',Spain:'EU',France:'EU',Italy:'EU',Germany:'EU',Portugal:'EU',China:'AS',Japan:'AS','South Korea':'AS',Australia:'OC','New Zealand':'OC','South Africa':'AF'};
+const tax={
+ Brazil:{d:18,ipi:6.5,social:11.75,vat:18}, Chile:{d:6,ipi:0,social:0,vat:19}, Argentina:{d:20,ipi:0,social:0,vat:21},
+ Uruguay:{d:20,ipi:0,social:0,vat:22}, 'United States':{d:3,ipi:0,social:0,vat:7}, Mexico:{d:20,ipi:0,social:0,vat:16},
+ 'United Kingdom':{d:8,ipi:0,social:0,vat:20}, Spain:{d:8,ipi:0,social:0,vat:21}, France:{d:8,ipi:0,social:0,vat:20},
+ Italy:{d:8,ipi:0,social:0,vat:22}, Germany:{d:8,ipi:0,social:0,vat:19}, Portugal:{d:8,ipi:0,social:0,vat:23},
+ China:{d:14,ipi:10,social:0,vat:13}, Japan:{d:15,ipi:0,social:0,vat:10}, 'South Korea':{d:15,ipi:0,social:0,vat:10},
+ Australia:{d:5,ipi:29,social:0,vat:10}, 'New Zealand':{d:5,ipi:0,social:0,vat:15}, 'South Africa':{d:20,ipi:0,social:0,vat:15}
+};
+const usdToCurrency={USD:1,BRL:5.10,CLP:925,EUR:.855,GBP:.74,ARS:1390,MXN:17.8,UYU:40,PYG:7000,DOP:63,COP:3900,PEN:3.50,GTQ:7.65,CNY:7.1,JPY:148,KRW:1390,AUD:1.52,NZD:1.67,ZAR:17.5};
+// Static planning FX snapshot. Every selectable EXW and destination currency uses the same USD cross-rate table.
+const usdToDest=usdToCurrency;
+function updateReverseCurrencyLabels(){
+  if(!$('targetCurrency')) return;
+  $('targetCurrency').textContent=dc();
+  $('targetPvpLabel').textContent=`Target Retail Price (${dc()})`;
+  $('reverseExwLabel').textContent=`Maximum Ex Works (${$('cur').value})`;
+  $('reverseExwUnit').textContent=`per bottle · ${$('cur').value} EXW currency`;
+}
+function calcFX(){
+  const from=$('cur').value, to=dc();
+  if(from===to) return 1;
+  const fromPerUSD=usdToCurrency[from];
+  const toPerUSD=usdToCurrency[to];
+  if(!fromPerUSD || !toPerUSD) return 0;
+  // (destination currency / USD) ÷ (source currency / USD) = destination currency / source currency
+  return toPerUSD/fromPerUSD;
+}
+
+function dc(){return destCurrency[$('dc').value]||'USD'}
+function money(v,c=dc()){try{return new Intl.NumberFormat('en-US',{style:'currency',currency:c,maximumFractionDigits:(c==='CLP'||c==='ARS')?0:2}).format(v)}catch(e){return c+' '+v.toFixed(2)}}
+function unitsStd(){let f=750/N('ml'); return Math.round(($('ship').value==='pallet'?960:$('ship').value==='20'?9600:18000)*f)}
+function freightStd(){let a=region[$('oc').value],b=region[$('dc').value],v=$('ship').value==='pallet'?700:$('ship').value==='20'?2400:3900;if(a===b)v*=.8;else if(a==='AS'||b==='AS'||a==='OC'||b==='OC')v*=1.35;else if((a==='SA'&&b==='EU')||(a==='EU'&&b==='SA'))v*=1.15;return Math.round(v)}
+function defaults(){
+ let t=tax[$('dc').value]||{d:10,ipi:0,social:0,vat:15};
+ $('u').value=unitsStd(); $('freight').value=freightStd(); $('insurance').value=.6; $('handling').value=$('ship').value==='pallet'?300:$('ship').value==='20'?750:950;
+ $('duty').value=t.d; $('ipi').value=t.ipi; $('social').value=t.social; $('vat').value=t.vat;
+ $('im').value=25; $('dm').value=25; $('rm').value=$('cust').value==='online'?30:35;
+ if($('dc').value==='Brazil' && $('oc').value==='Chile'){ $('duty').value=0; $('dutyStatus').textContent='ACE-35'; } else $('dutyStatus').textContent='BASE/EST.';
+ $('fx').value=calcFX().toFixed(4);
+ updateReverseCurrencyLabels();
+ assumptionsInitialized=true;
+}
+function layer(cost,margin){return cost/(1-Math.min(margin,95)/100)}
+function engine(){
+ let u=Math.max(N('u'),1), exwDest=N('exw')*N('fx'), usdDest=usdToDest[dc()]||1;
+ let goods=exwDest*u, fr=N('freight')*usdDest, ins=goods*N('insurance')/100, hand=N('handling')*usdDest;
+ let cif=goods+fr+ins, duty=cif*N('duty')/100, ipi=(cif+duty)*N('ipi')/100, social=(cif+duty+ipi)*N('social')/100;
+ let landedTot=cif+duty+ipi+social+hand, landed=landedTot/u;
+
+ // Customer type determines the commercial route, but Step 2 always ends at consumer PVP.
+ let route=$('cust').value, imp=null, dist=null, ret=null, retailBase;
+ if(route==='importer'){
+   imp=layer(landed,N('im'));
+   dist=layer(imp,N('dm'));
+   ret=layer(dist,N('rm'));
+   retailBase=ret;
+ } else if(route==='distributor'){
+   dist=layer(landed,N('dm'));
+   ret=layer(dist,N('rm'));
+   retailBase=ret;
+ } else if(route==='physical'){
+   ret=layer(landed,N('rm'));
+   retailBase=ret;
+ } else { // online retail
+   ret=layer(landed,N('rm'));
+   retailBase=ret;
+ }
+ let final=retailBase*(1+N('vat')/100);
+ return {u,exwDest,goods,fr,ins,hand,cif,duty,ipi,social,landedTot,landed,imp,dist,ret,final,route}
+}
+function calculate(){
+ if(!validateForm()) return;
+ $('step2').classList.remove('hidden');
+ $('reverseBox').classList.remove('hidden');
+ $('step3').classList.remove('hidden');
+ defaults();
+ recalc();
+ $('step2').scrollIntoView({behavior:'smooth'});
+}
+function recalc(fromAssumptions=false){
+ let r=engine(), routeLabels={
+   importer:'Exporter → Importer → Distributor → Retail → Consumer',
+   distributor:'Exporter → Distributor → Retail → Consumer',
+   physical:'Exporter → Physical Retail → Consumer',
+   online:'Exporter → Online Retail → Consumer'
+ };
+ $('route').textContent=`${$('oc').value} / ${$('ocity').value} → ${$('dc').value} / ${$('dcity').value} · ${$('ship').options[$('ship').selectedIndex].text} · ${$('ml').value} ml`;
+ $('pvp').textContent=money(r.final);
+ $('pvpLabel').textContent='Estimated Retail Price per bottle in local currency';
+ $('origEq').textContent='';
+ $('landed').textContent=money(r.landed);
+ $('units').textContent=r.u.toLocaleString();
+ $('mult').textContent=(r.final/(N('exw')*N('fx'))).toFixed(2)+'×';
+
+ 
+
+ let commercialRows=[['EXW converted / bottle',r.exwDest],['Landed / bottle',r.landed]];
+ if(r.imp!==null) commercialRows.push(['Importer selling price / bottle',r.imp]);
+ if(r.dist!==null) commercialRows.push(['Distributor selling price / bottle',r.dist]);
+ commercialRows.push([r.route==='online'?'Online retail net / bottle':'Retail net / bottle',r.ret]);
+ commercialRows.push(['Consumer retail price / bottle',r.final]);
+
+ $('breakdown').innerHTML=
+   '<div class="kicker" style="margin-top:4px">COMMERCIAL PRICE FORMATION</div>'+
+   commercialRows.map(x=>`<div class="row"><span>${x[0]}</span><b>${money(x[1])}</b></div>`).join('');
+
+ if(fromAssumptions){
+   $('adjustedPvp').textContent=money(r.final);
+   $('adjustedResult').classList.remove('hidden');
+   $('adjustedResult').scrollIntoView({behavior:'smooth',block:'center'});
+ }
+
+ $('sourceNote').innerHTML=($('dc').value==='Brazil'&&$('oc').value==='Chile')
+   ?'<b>Active origin rule:</b> Chile → Brazil applies 0% import duty under ACE-35, subject to origin compliance. Other taxes and ICMS must be validated for the specific case.'
+   :'<b>Planning mode:</b> this route does not yet include a verified bilateral preference in the prototype.';
+}
+
+function reverseCalc(){
+  if(!validateForm()) return;
+  // Reverse Pricing must work independently of whether Forward Pricing was run first.
+  // Initialize only when critical scenario assumptions are missing, so manual edits are preserved.
+  if(!assumptionsInitialized || N('u')<=0 || N('fx')<=0) defaults();
+
+  let target=N('targetPvp');
+  if(target<=0){ $('targetPvp').classList.add('invalid'); $('reverseNote').textContent='Enter a target retail price greater than zero.'; return; }
+
+  let route=$('cust').value;
+  let netRetail = target/(1+N('vat')/100);
+  let cost = netRetail*(1-N('rm')/100);
+
+  if(route==='importer'){
+    cost = cost*(1-N('dm')/100);
+    cost = cost*(1-N('im')/100);
+  } else if(route==='distributor'){
+    cost = cost*(1-N('dm')/100);
+  }
+  // cost is maximum landed/bottle.
+  let u=Math.max(N('u'),1), usdDest=usdToDest[dc()]||1;
+  let desiredLandedTotal=cost*u;
+  let hand=N('handling')*usdDest;
+  let fr=N('freight')*usdDest;
+  let insRate=N('insurance')/100, dutyRate=N('duty')/100, ipiRate=N('ipi')/100, socialRate=N('social')/100;
+
+  // Invert generic import stack:
+  // landed = ((goods + freight + insurance(goods))*(1+duty)*(1+ipi)*(1+social)) + handling
+  let taxableBeforeHandling=(desiredLandedTotal-hand)/((1+dutyRate)*(1+ipiRate)*(1+socialRate));
+  let goods=(taxableBeforeHandling-fr)/(1+insRate);
+  let exwDest=Math.max(goods/u,0);
+  const fx=N('fx');
+  if(fx<=0 || !Number.isFinite(fx)){
+    $('reverseNote').textContent='Unable to calculate: the FX assumption is missing or invalid.';
+    $('reverseExw').textContent='—';
+    return;
+  }
+  let exwOrigin=exwDest/fx;
+  if(!Number.isFinite(exwOrigin) || exwOrigin<0){
+    $('reverseNote').textContent='Unable to calculate with the current assumptions. Please review logistics, taxes and margins.';
+    $('reverseExw').textContent='—';
+    return;
+  }
+
+  $('reverseExw').textContent=money(exwOrigin,$('cur').value);
+  $('targetCurrency').textContent=dc();
+  $('targetPvpLabel').textContent=`Target Retail Price (${dc()})`;
+  $('reverseExwLabel').textContent=`Maximum Ex Works (${$('cur').value})`;
+  $('reverseExwUnit').textContent=`per bottle · ${$('cur').value} EXW currency`;
+  $('reverseNote').innerHTML=`For a target retail price of <b>${money(target)}</b>, the estimated maximum EXW is <b>${money(exwOrigin,$('cur').value)}</b> per bottle. This uses the same taxes, logistics and margins shown in Behind the Scenes.`;
+}
+
+// Populate Behind the Scenes and make Reverse Pricing usable immediately on load.
+defaults();
+</script>
+
+<script>
+let deferredInstallPrompt=null;
+const installBtn=document.getElementById('installApp');
+const installStatus=document.getElementById('installStatus');
+
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  if(installBtn) installBtn.style.display='inline-block';
+  if(installStatus) installStatus.textContent='Ready to install on this device.';
+});
+
+if(installBtn){
+  installBtn.addEventListener('click',async ()=>{
+    if(deferredInstallPrompt){
+      deferredInstallPrompt.prompt();
+      const choice=await deferredInstallPrompt.userChoice;
+      if(installStatus) installStatus.textContent=choice.outcome==='accepted'?'Installation started.':'You can install it later.';
+      deferredInstallPrompt=null;
+    }else{
+      if(installStatus) installStatus.textContent='On iPhone/iPad: Share → Add to Home Screen. On desktop/Android use the browser Install App option.';
+    }
+  });
+}
+
+window.addEventListener('appinstalled',()=>{
+  if(installStatus) installStatus.textContent='NeuroWines installed.';
+});
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+
+</body></html>
